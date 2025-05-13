@@ -46,7 +46,10 @@ jobs:
         run: sed "/^  [^${ROS_DISTRO:0:1}]\S*:$/{:loop; s/^/#/; n; /^\(  \S\|\S\)/"'!'"b loop;}" -i index.yaml
 
       - name: Test
-        run: nosetests -s
+        run: |
+          echo -e "machine github.com\nlogin git\npassword ${{ github.token }}\n" > ${HOME}/.netrc
+          nosetests -s
+          rm ${HOME}/.netrc
 
       - name: Yamllint
         run: yamllint $(find ${ROS_DISTRO} -name distribution.yaml)

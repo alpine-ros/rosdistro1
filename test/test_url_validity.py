@@ -17,7 +17,6 @@ except ImportError:
     from urlparse import urlparse
 
 import rosdistro
-from scripts import eol_distro_names
 import unidiff
 import yaml
 from yaml.composer import Composer
@@ -43,19 +42,6 @@ def get_all_distribution_filenames(url=None):
         for f in d['distribution']:
             dpath = os.path.abspath(urlparse(f).path)
             distribution_filenames.append(dpath)
-    return distribution_filenames
-
-
-def get_eol_distribution_filenames(url=None):
-    if not url:
-        url = rosdistro.get_index_url()
-    distribution_filenames = []
-    i = rosdistro.get_index(url)
-    for d_name, d in i.distributions.items():
-        if d_name in eol_distro_names:
-            for f in d['distribution']:
-                dpath = os.path.abspath(urlparse(f).path)
-                distribution_filenames.append(dpath)
     return distribution_filenames
 
 
@@ -156,36 +142,6 @@ def check_repo_for_errors(repo):
     return errors
 
 
-def detect_post_eol_release(n, repo, lines):
-    errors = []
-    if 'release' in repo:
-        release_element = repo['release']
-        start_line = release_element['__line__']
-        end_line = start_line
-        if 'tags' not in release_element:
-            print('Missing tags element in release section skipping')
-            return []
-        # There are 3 lines beyond the tags line. The tag contents as well as
-        # the url and version number
-        end_line = release_element['tags']['__line__'] + 3
-        matching_lines = [l for l in lines if l >= start_line and l <= end_line]
-        if matching_lines:
-            errors.append('There is a change to a release section of an EOLed '
-                          'distribution. Lines: %s' % matching_lines)
-    if 'doc' in repo:
-        doc_element = repo['doc']
-        start_line = doc_element['__line__']
-        end_line = start_line + 3
-        # There are 3 lines beyond the tags line. The tag contents as well as
-        # the url and version number
-        matching_lines = [l for l in lines if l >= start_line and l <= end_line]
-        if matching_lines:
-            errors.append('There is a change to a doc section of an EOLed '
-                          'distribution. Lines: %s' % matching_lines)
-
-    return errors
-
-
 def load_yaml_with_lines(filename):
     d = open(filename).read()
     loader = yaml.Loader(d)
@@ -250,7 +206,6 @@ def main():
             continue
         with Fold():
             print("verifying diff of file '%s'" % path)
-            is_eol_distro = path in get_eol_distribution_filenames(url)
             data = load_yaml_with_lines(path)
 
             repos = data['repositories']
@@ -266,10 +221,6 @@ def main():
                 errors = check_repo_for_errors(r)
                 detected_errors.extend(["In file '''%s''': " % path + e
                                         for e in errors])
-                if is_eol_distro:
-                    errors = detect_post_eol_release(n, r, lines)
-                    detected_errors.extend(["In file '''%s''': " % path + e
-                                            for e in errors])
 
     for e in detected_errors:
 

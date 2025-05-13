@@ -6,8 +6,6 @@ from ros_buildfarm.common import topological_order_packages
 from rosdistro import get_index
 from rosdistro.distribution_cache_generator import generate_distribution_cache
 
-from scripts import eol_distro_names
-
 from .fold_block import Fold
 
 INDEX_YAML = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'index.yaml'))
@@ -21,7 +19,7 @@ If this fails you can run 'rosdistro_build_cache index.yaml' to perform the same
         index = 'file://' + os.path.abspath(INDEX_YAML)
         index = get_index(index)
         dist_names = sorted(index.distributions.keys())
-        dist_names = [n for n in dist_names if n not in eol_distro_names]
+        dist_names = [n for n in dist_names]
 
         errors = []
         caches = OrderedDict()

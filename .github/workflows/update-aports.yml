@@ -1,0 +1,80 @@
+name: update-aports
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  update-aports:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        env:
+          - ROS_DISTRO=noetic ALPINE_VERSION=3.20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          # Persisted credential has higher priority than .netrc.
+          # Disable it to use the correct credential.
+          persist-credentials: false
+      - name: Setup environment variables
+        run: echo ${{ matrix.env }} | xargs -n1 echo >> ${GITHUB_ENV}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+      - name: Install test deps
+        run: |
+          python3 -m pip install --upgrade \
+            PyGithub \
+            PyYAML \
+            argparse \
+            catkin_pkg \
+            coverage \
+            nose \
+            ros_buildfarm \
+            rosdep \
+            rosdistro \
+            unidiff \
+            yamllint
+      - name: Disable untargeted distro
+        run: sed "/^  [^${ROS_DISTRO:0:1}]\S*:$/{:loop; s/^/#/; n; /^\(  \S\|\S\)/"'!'"b loop;}" -i index.yaml
+
+      - name: Test
+        run: nosetests -s
+
+      - name: Yamllint
+        run: yamllint $(find ${ROS_DISTRO} -name distribution.yaml)
+
+      - name: Build updater image
+        run: |
+          docker build \
+            --build-arg ALPINE_VERSION \
+            --build-arg ROS_DISTRO \
+            -t aports-updater .
+
+      - name: Deploy
+        run: |
+          DRYRUN=true
+          if [ "${{ github.ref }}" = "refs/heads/master" ]; then
+            DRYRUN=false
+          fi
+
+          echo -e "machine github.com\nlogin git\npassword ${{ secrets.AR_GITHUB_TOKEN }}\n" > ${HOME}/.netrc
+          echo -e "machine api.github.com\nlogin git\npassword ${{ secrets.AR_GITHUB_TOKEN }}\n" >> ${HOME}/.netrc
+
+          docker run \
+            --rm \
+            -v "${GITHUB_WORKSPACE}:/rosdistro1" \
+            -v "${HOME}/.netrc:/root/.netrc:ro" \
+            -e DRYRUN=${DRYRUN} \
+            aports-updater
+
+          rm ${HOME}/.netrc

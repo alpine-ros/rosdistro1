@@ -51,8 +51,8 @@ tmpdir=$(mktemp -d)
 trap "rm -rf $tmpdir" EXIT
 
 git clone https://github.com/${aports_slug}.git ${tmpdir}
-mkdir -p ${tmpdir}/ros/${distro_dir}
-cd ${tmpdir}/ros/${distro_dir}
+mkdir -p ${tmpdir}/v${alpine_version}/ros/${ros_distro}
+cd ${tmpdir}/ros/${ros_distro}
 
 git config user.name "at-wat"
 git config user.email "8390204+at-wat@users.noreply.github.com"

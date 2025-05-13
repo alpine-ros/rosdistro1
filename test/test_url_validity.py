@@ -27,7 +27,7 @@ from .fold_block import Fold
 # for commented debugging code below
 # import pprint
 
-DIFF_TARGET = 'origin/master'
+DIFF_TARGET = 'origin/main'
 
 
 TARGET_FILE_BLACKLIST = []

@@ -22,7 +22,7 @@ jobs:
           # Disable it to use the correct credential.
           persist-credentials: false
       - name: Setup environment variables
-        run: echo ${{ matrix.env }} | xargs -n1 echo >> ${GITHUB_ENV}
+        run: echo ${{ matrix.env }} | xargs -n1 echo >>${GITHUB_ENV}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -47,7 +47,7 @@ jobs:
 
       - name: Test
         run: |
-          echo -e "machine github.com\nlogin git\npassword ${{ github.token }}\n" > ${HOME}/.netrc
+          echo -e "machine github.com\nlogin git\npassword ${{ github.token }}\n" >${HOME}/.netrc
           nosetests -s
           rm ${HOME}/.netrc
 
@@ -68,8 +68,8 @@ jobs:
             DRYRUN=false
           fi
 
-          echo -e "machine github.com\nlogin git\npassword ${{ secrets.AR_GITHUB_TOKEN }}\n" > ${HOME}/.netrc
-          echo -e "machine api.github.com\nlogin git\npassword ${{ secrets.AR_GITHUB_TOKEN }}\n" >> ${HOME}/.netrc
+          echo -e "machine github.com\nlogin git\npassword ${{ secrets.AR_GITHUB_TOKEN }}\n" >${HOME}/.netrc
+          echo -e "machine api.github.com\nlogin git\npassword ${{ secrets.AR_GITHUB_TOKEN }}\n" >>${HOME}/.netrc
 
           docker run \
             --rm \

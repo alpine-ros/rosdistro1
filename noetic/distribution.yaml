@@ -1,0 +1,95 @@
+%YAML 1.1
+# ROS distribution file
+# see REP 143: http://ros.org/reps/rep-0143.html
+---
+release_platforms:
+  ubuntu:
+  - focal
+repositories:
+  mcl_3dl:
+    doc:
+      type: git
+      url: https://github.com/at-wat/mcl_3dl.git
+      version: master
+    release:
+      tags:
+        release: release/noetic/{package}/{version}
+      url: https://github.com/at-wat/mcl_3dl-release.git
+      version: 0.6.4-1
+    source:
+      type: git
+      url: https://github.com/at-wat/mcl_3dl.git
+      version: master
+    status: developed
+  mcl_3dl_msgs:
+    doc:
+      type: git
+      url: https://github.com/at-wat/mcl_3dl_msgs.git
+      version: master
+    release:
+      tags:
+        release: release/noetic/{package}/{version}
+      url: https://github.com/at-wat/mcl_3dl_msgs-release.git
+      version: 0.6.0-1
+    source:
+      type: git
+      url: https://github.com/at-wat/mcl_3dl_msgs.git
+      version: master
+    status: developed
+  neonavigation:
+    doc:
+      type: git
+      url: https://github.com/at-wat/neonavigation.git
+      version: master
+    release:
+      packages:
+      - costmap_cspace
+      - joystick_interrupt
+      - map_organizer
+      - neonavigation
+      - neonavigation_common
+      - neonavigation_launch
+      - obj_to_pointcloud
+      - planner_cspace
+      - safety_limiter
+      - track_odometry
+      - trajectory_tracker
+      tags:
+        release: release/noetic/{package}/{version}
+      url: https://github.com/at-wat/neonavigation-release.git
+      version: 0.18.0-1
+  neonavigation_msgs:
+    doc:
+      type: git
+      url: https://github.com/at-wat/neonavigation_msgs.git
+      version: master
+    release:
+      packages:
+      - costmap_cspace_msgs
+      - map_organizer_msgs
+      - neonavigation_metrics_msgs
+      - neonavigation_msgs
+      - planner_cspace_msgs
+      - safety_limiter_msgs
+      - trajectory_tracker_msgs
+      tags:
+        release: release/noetic/{package}/{version}
+      url: https://github.com/at-wat/neonavigation_msgs-release.git
+      version: 0.14.0-1
+  urg_stamped:
+    doc:
+      type: git
+      url: https://github.com/seqsense/urg_stamped.git
+      version: master
+    release:
+      tags:
+        release: release/noetic/{package}/{version}
+      url: https://github.com/seqsense/urg_stamped-release.git
+      version: 0.4.0-1
+    source:
+      type: git
+      url: https://github.com/seqsense/urg_stamped.git
+      version: master
+    status: developed
+type: distribution
+version: 2

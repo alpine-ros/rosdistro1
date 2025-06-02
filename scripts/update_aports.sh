@@ -22,8 +22,7 @@ esac
 
 generate_opts=
 case "${ALPINE_VERSION}" in
-  3.17)
-    ;;
+  3.17) ;;
   *)
     generate_opts="${generate_opts} --split-dev"
     ;;

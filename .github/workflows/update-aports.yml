@@ -30,26 +30,14 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install test deps
-        run: |
-          python3 -m pip install --upgrade \
-            PyGithub \
-            PyYAML \
-            argparse \
-            catkin_pkg \
-            coverage \
-            nose \
-            ros_buildfarm \
-            rosdep \
-            rosdistro \
-            unidiff \
-            yamllint
+        run: python3 -m pip install --upgrade -r test/requirements.txt
       - name: Disable untargeted distro
         run: sed "/^  [^${ROS_DISTRO:0:1}]\S*:$/{:loop; s/^/#/; n; /^\(  \S\|\S\)/"'!'"b loop;}" -i index.yaml
 
       - name: Test
         run: |
           echo -e "machine github.com\nlogin git\npassword ${{ github.token }}\n" >${HOME}/.netrc
-          nosetests -s
+          pytest -s test
           rm ${HOME}/.netrc
 
       - name: Yamllint

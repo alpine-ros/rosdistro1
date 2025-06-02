@@ -318,23 +318,6 @@ repositories:
       url: https://github.com/ros/filters.git
       version: noetic-devel
     status: maintained
-  geographic_info:
-    doc:
-      type: git
-      url: https://github.com/ros-geographic-info/geographic_info.git
-      version: master
-    release:
-      packages:
-      - geographic_msgs
-      tags:
-        release: release/noetic/{package}/{version}
-      url: https://github.com/ros-geographic-info/geographic_info-release.git
-      version: 0.5.6-1
-    source:
-      type: git
-      url: https://github.com/ros-geographic-info/geographic_info.git
-      version: master
-    status: maintained
   gencpp:
     doc:
       type: git
@@ -423,6 +406,23 @@ repositories:
       type: git
       url: https://github.com/ros/genpy.git
       version: noetic-devel
+    status: maintained
+  geographic_info:
+    doc:
+      type: git
+      url: https://github.com/ros-geographic-info/geographic_info.git
+      version: master
+    release:
+      packages:
+      - geographic_msgs
+      tags:
+        release: release/noetic/{package}/{version}
+      url: https://github.com/ros-geographic-info/geographic_info-release.git
+      version: 0.5.6-1
+    source:
+      type: git
+      url: https://github.com/ros-geographic-info/geographic_info.git
+      version: master
     status: maintained
   geometry:
     doc:

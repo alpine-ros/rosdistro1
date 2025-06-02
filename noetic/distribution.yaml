@@ -12,8 +12,6 @@ repositories:
       url: https://github.com/ros/actionlib.git
       version: noetic-devel
     release:
-      packages:
-      - actionlib
       tags:
         release: release/noetic/{package}/{version}
       url: https://github.com/ros-gbp/actionlib-release.git
@@ -638,8 +636,6 @@ repositories:
       url: https://github.com/ros/kdl_parser.git
       version: noetic-devel
     release:
-      packages:
-      - kdl_parser
       tags:
         release: release/noetic/{package}/{version}
       url: https://github.com/ros-gbp/kdl_parser-release.git
@@ -964,8 +960,6 @@ repositories:
       url: https://github.com/OctoMap/octomap.git
       version: devel
     release:
-      packages:
-      - octomap
       tags:
         release: release/noetic/{package}/{version}
       url: https://github.com/ros-gbp/octomap-release.git

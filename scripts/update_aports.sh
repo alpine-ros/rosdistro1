@@ -22,10 +22,11 @@ esac
 
 generate_opts=
 case "${ALPINE_VERSION}" in
-  3.20)
+  3.17)
+    ;;
+  *)
     generate_opts="${generate_opts} --split-dev"
     ;;
-  *) ;;
 esac
 
 branch="rosdistro1-${distro_dir}-${short_hash}"

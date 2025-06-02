@@ -12,6 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         env:
+          - ROS_DISTRO=noetic ALPINE_VERSION=3.17
           - ROS_DISTRO=noetic ALPINE_VERSION=3.20
     steps:
       - name: Checkout
@@ -27,7 +28,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.8"
+          python-version: "3.12"
       - name: Install test deps
         run: |
           python3 -m pip install --upgrade \

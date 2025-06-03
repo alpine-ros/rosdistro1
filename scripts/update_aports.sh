@@ -52,8 +52,8 @@ git clone https://github.com/${aports_slug}.git ${tmpdir}
 mkdir -p ${tmpdir}/v${alpine_version}/ros/${ros_distro}
 cd ${tmpdir}/v${alpine_version}/ros/${ros_distro}
 
-git config user.name "at-wat"
-git config user.email "8390204+at-wat@users.noreply.github.com"
+git config user.name "alpine-ros-bot"
+git config user.email "214657941+alpine-ros-bot@users.noreply.github.com"
 
 generate-rospkg-apkbuild-multi --all ${ros_distro} ${generate_opts}
 

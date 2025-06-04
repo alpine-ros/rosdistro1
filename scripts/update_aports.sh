@@ -9,6 +9,7 @@ short_hash=$(git log --format=%h -n1 ${ros_distro})
 upstream_commit_msg=$(git log --format=%B ${short_hash}^..${short_hash} \
   | sed ':a; N; $!b a; s/\\/\\\\/g; s/\t/\\t/g; s/"/\\"/g; s/\n/\\n/g; s/\r/\\r/g;')
 aports_slug='seqsense/aports-ros-experimental'
+aports_fork_slug='alpine-ros-bot/aports-ros-experimental'
 
 distro_dir=${ros_distro}
 case ${ros_distro} in
@@ -31,7 +32,7 @@ esac
 branch="rosdistro1-${distro_dir}-${short_hash}"
 
 if git ls-remote --exit-code \
-  https://github.com/${aports_slug}.git \
+  https://github.com/${aports_fork_slug}.git \
   refs/heads/${branch}; then
   echo "The change is already pushed"
   exit 0
@@ -48,7 +49,11 @@ rosdep update
 tmpdir=$(mktemp -d)
 trap "rm -rf $tmpdir" EXIT
 
-git clone https://github.com/${aports_slug}.git ${tmpdir}
+git clone https://github.com/${aports_fork_slug}.git ${tmpdir}
+cd ${tmpdir}
+git remote add upstream https://github.com/${aports_slug}.git
+git pull upstream master
+
 mkdir -p ${tmpdir}/v${alpine_version}/ros/${ros_distro}
 cd ${tmpdir}/v${alpine_version}/ros/${ros_distro}
 
@@ -74,7 +79,7 @@ pr_request_body=$(
 {
   "title": "Update ${distro_dir} aports (rosdistro ${short_hash})",
   "body": "Upstream commit messages\\n\`\`\`\\n${upstream_commit_msg}\\n\`\`\`",
-  "head": "${branch}",
+  "head": "$(dirname ${aports_fork_slug}):${branch}",
   "base": "master"
 }
 EOS
@@ -84,7 +89,7 @@ echo ${pr_request_body}
 if ! ${DRYRUN:-true}; then
   if ! git push origin ${branch}; then
     if git ls-remote --exit-code \
-      https://github.com/${aports_slug}.git \
+      https://github.com/${aports_fork_slug}.git \
       refs/heads/${branch}; then
       echo "The change is already pushed"
       exit 0

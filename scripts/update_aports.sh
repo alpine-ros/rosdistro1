@@ -89,7 +89,7 @@ echo ${pr_request_body}
 if ! ${DRYRUN:-true}; then
   if ! git push origin ${branch}; then
     if git ls-remote --exit-code \
-      https://github.com/${aports_slug}.git \
+      https://github.com/${aports_fork_slug}.git \
       refs/heads/${branch}; then
       echo "The change is already pushed"
       exit 0

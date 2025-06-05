@@ -11,15 +11,7 @@ upstream_commit_msg=$(git log --format=%B ${short_hash}^..${short_hash} \
 aports_slug='seqsense/aports-ros-experimental'
 aports_fork_slug='alpine-ros-bot/aports-ros-experimental'
 
-distro_dir=${ros_distro}
-case ${ros_distro} in
-  "noetic")
-    distro_dir=${ros_distro}.v${alpine_version}
-    ;;
-  *)
-    echo "Unsupported ROS_DISTRO"
-    ;;
-esac
+title=${ros_distro}-${alpine_version}
 
 generate_opts=
 case "${ALPINE_VERSION}" in
@@ -29,7 +21,7 @@ case "${ALPINE_VERSION}" in
     ;;
 esac
 
-branch="rosdistro1-${distro_dir}-${short_hash}"
+branch="rosdistro1-${title}-${short_hash}"
 
 if git ls-remote --exit-code \
   https://github.com/${aports_fork_slug}.git \
@@ -70,14 +62,14 @@ if git diff --cached --exit-code; then
   exit 0
 fi
 
-git commit -m "Update ${distro_dir} aports (rosdistro ${short_hash})"
+git commit -m "Update ${title} aports (rosdistro1 ${short_hash})"
 
 # Push and open PR
 
 pr_request_body=$(
   cat <<EOS
 {
-  "title": "Update ${distro_dir} aports (rosdistro ${short_hash})",
+  "title": "Update ${title} aports (rosdistro1 ${short_hash})",
   "body": "Upstream commit messages\\n\`\`\`\\n${upstream_commit_msg}\\n\`\`\`",
   "head": "$(dirname ${aports_fork_slug}):${branch}",
   "base": "master"

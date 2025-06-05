@@ -1945,6 +1945,23 @@ repositories:
       url: https://github.com/ros-visualization/rviz.git
       version: noetic-devel
     status: maintained
+  sample-ros-pkg:
+    doc:
+      type: git
+      url: https://github.com/alpine-ros/sample-ros-pkg.git
+      version: main
+    release:
+      packages:
+      - sample_ros_pkg
+      tags:
+        release: release/noetic/{package}/{version}
+      url: https://github.com/alpine-ros-bot/sample-ros-pkg-release.git
+      version: 0.0.13-1
+    source:
+      type: git
+      url: https://github.com/alpine-ros/sample-ros-pkg.git
+      version: main
+    status: developed
   std_msgs:
     doc:
       type: git

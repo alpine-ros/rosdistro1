@@ -26,11 +26,14 @@ jobs:
       - name: Setup environment variables
         run: echo ${{ matrix.env }} | xargs -n1 echo >>${GITHUB_ENV}
 
+      - name: Distribution file
+        id: distribution-file
+        run: echo "path=/${ROS_DISTRO}/distribution.yaml" >>${GITHUB_OUTPUT}
       - name: Cache distribution data
         uses: actions/cache@v4
         with:
           path: ${{ env.ROS_DISTRO }}-cache.yaml.gz
-          key: distribution-${{ env.ROS_DISTRO }}-${{ hashFiles('/${{ env.ROS_DISTRO }}/distribution.yaml') }}
+          key: distribution-${{ env.ROS_DISTRO }}-${{ hashFiles(steps.distribution-file.outputs.path) }}
           restore-keys: distribution-${{ env.ROS_DISTRO }}-
 
       - name: Set up Python

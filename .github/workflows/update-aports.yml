@@ -26,7 +26,7 @@ jobs:
       - name: Setup environment variables
         run: echo ${{ matrix.env }} | xargs -n1 echo >>${GITHUB_ENV}
 
-      - name: Cache distribution data
+      - name: Cache distribution cache data
         uses: actions/cache@v4
         with:
           path: ${{ env.ROS_DISTRO }}-cache.yaml.gz
@@ -41,6 +41,9 @@ jobs:
         run: python3 -m pip install --upgrade -r test/requirements.txt
       - name: Disable untargeted distro
         run: sed "/^  [^${ROS_DISTRO:0:1}]\S*:$/{:loop; s/^/#/; n; /^\(  \S\|\S\)/"'!'"b loop;}" -i index.yaml
+
+      - name: Build distribution cache data
+        run: rosdistro_build_cache index.yaml ${ROS_DISTRO}
 
       - name: Test
         run: pytest -s test

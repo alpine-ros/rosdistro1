@@ -30,7 +30,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ env.ROS_DISTRO }}-cache.yaml.gz
-          key: distribution-${{ env.ROS_DISTRO }}-${{ hashFiles(format('/{0}/distribution.yaml', env.ROS_DISTRO)) }}
+          key: distribution-${{ env.ROS_DISTRO }}-${{ hashFiles(format('{0}/distribution.yaml', env.ROS_DISTRO)) }}
           restore-keys: distribution-${{ env.ROS_DISTRO }}-
 
       - name: Set up Python

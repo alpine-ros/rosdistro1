@@ -48,11 +48,6 @@ jobs:
       - name: Yamllint
         run: yamllint $(find ${ROS_DISTRO} -name distribution.yaml)
 
-      - name: ls
-        run: ls -la
-      - name: git status
-        run: git status
-
       - name: Build updater image
         run: |
           docker build \

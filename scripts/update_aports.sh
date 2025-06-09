@@ -38,7 +38,7 @@ rosdep update
 
 # Sync aports fork
 if ! ${DRYRUN:-true}; then
-  GH_TOKEN=${GITHUB_TOKEN} gh api \
+  gh api \
     -X POST repos/${aports_fork_slug}/merge-upstream \
     -f branch=master
 else
@@ -97,7 +97,7 @@ if ! ${DRYRUN:-true}; then
     fi
   fi
 
-  echo "${pr_request_body}" | GH_TOKEN=${GITHUB_TOKEN} gh api \
+  echo "${pr_request_body}" | gh api \
     -X POST repos/${aports_slug}/pulls \
     --input - \
     || (

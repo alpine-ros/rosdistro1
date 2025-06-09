@@ -37,9 +37,13 @@ export ROSDISTRO_INDEX_URL="file://$(pwd)/index.yaml"
 rosdep update
 
 # Sync aports fork
-gh api \
-  -X POST repos/${aports_fork_slug}/merge-upstream \
-  -f branch=master
+if ! ${DRYRUN:-true}; then
+  gh api \
+    -X POST repos/${aports_fork_slug}/merge-upstream \
+    -f branch=master
+else
+  echo "Sync aports fork"
+fi
 
 # Clone and update aports
 

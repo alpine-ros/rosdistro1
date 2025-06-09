@@ -36,6 +36,11 @@ rosdistro_build_cache index.yaml ${ros_distro}
 export ROSDISTRO_INDEX_URL="file://$(pwd)/index.yaml"
 rosdep update
 
+# Sync aports fork
+gh api \
+  -X POST repos/${aports_fork_slug}/merge-upstream \
+  -f branch=master
+
 # Clone and update aports
 
 tmpdir=$(mktemp -d)
@@ -88,7 +93,9 @@ if ! ${DRYRUN:-true}; then
     fi
   fi
 
-  curl https://api.github.com/repos/${aports_slug}/pulls -d "${pr_request_body}" -XPOST -n \
+  echo "${pr_request_body}" | gh api \
+    -X POST repos/${aports_slug}/pulls \
+    --input - \
     || (
       echo "Failed to open a pull request. GitHub personal access token for api.github.com is not set up."
       echo "Please manually open the pull request."

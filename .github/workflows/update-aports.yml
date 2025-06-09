@@ -59,14 +59,15 @@ jobs:
             -t aports-updater .
 
       - name: Deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.AR_GITHUB_TOKEN }}
         run: |
           DRYRUN=true
           if [ "${{ github.ref }}" = "refs/heads/main" ]; then
             DRYRUN=false
           fi
 
-          echo -e "machine github.com\nlogin git\npassword ${{ secrets.AR_GITHUB_TOKEN }}\n" >${HOME}/.netrc
-          echo -e "machine api.github.com\nlogin git\npassword ${{ secrets.AR_GITHUB_TOKEN }}\n" >>${HOME}/.netrc
+          echo -e "machine github.com\nlogin git\npassword ${GITHUB_TOKEN}\n" >${HOME}/.netrc
 
           docker run \
             --rm \

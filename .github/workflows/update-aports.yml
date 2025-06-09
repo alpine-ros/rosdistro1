@@ -74,6 +74,7 @@ jobs:
             -v "${GITHUB_WORKSPACE}:/rosdistro1" \
             -v "${HOME}/.netrc:/root/.netrc:ro" \
             -e DRYRUN=${DRYRUN} \
+            -e GH_TOKEN=${GITHUB_TOKEN} \
             aports-updater
 
           rm ${HOME}/.netrc

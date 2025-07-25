@@ -144,6 +144,25 @@ repositories:
       url: https://github.com/alpine-ros-pkgs/cartographer.git
       version: master
     status: developed
+  cartographer_ros:
+    doc:
+      type: git
+      url: https://github.com/alpine-ros-pkgs/cartographer_ros.git
+      version: master
+    release:
+      packages:
+      - cartographer_ros
+      - cartographer_ros_msgs
+      - cartographer_rviz
+      tags:
+        release: release/noetic/{package}/{version}
+      url: https://github.com/alpine-ros-pkgs/alpine-ros1-releases.git
+      version: 1.0.1000-1
+    source:
+      type: git
+      url: https://github.com/alpine-ros-pkgs/cartographer_ros.git
+      version: master
+    status: developed
   catkin:
     doc:
       type: git

@@ -129,6 +129,21 @@ repositories:
       url: https://github.com/ros/bond_core.git
       version: noetic-devel
     status: maintained
+  cartographer:
+    doc:
+      type: git
+      url: https://github.com/alpine-ros-pkgs/cartographer.git
+      version: master
+    release:
+      tags:
+        release: release/noetic/{package}/{version}
+      url: https://github.com/alpine-ros-pkgs/alpine-ros1-releases.git
+      version: 2.0.1000-1
+    source:
+      type: git
+      url: https://github.com/alpine-ros-pkgs/cartographer.git
+      version: master
+    status: developed
   catkin:
     doc:
       type: git

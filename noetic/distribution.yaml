@@ -1996,6 +1996,21 @@ repositories:
       url: https://github.com/alpine-ros/sample-ros-pkg.git
       version: main
     status: developed
+  separate_topic:
+    doc:
+      type: git
+      url: https://github.com/at-wat/separate_topic.git
+      version: master
+    release:
+      tags:
+        release: release/noetic/{package}/{version}
+      url: https://github.com/at-wat/alpine-ros1-releases.git
+      version: 0.0.1-1
+    source:
+      type: git
+      url: https://github.com/at-wat/separate_topic.git
+      version: master
+    status: developed
   std_msgs:
     doc:
       type: git

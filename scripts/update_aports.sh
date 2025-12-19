@@ -13,11 +13,14 @@ aports_fork_slug='alpine-ros-bot/aports-ros-experimental'
 
 title=${ros_distro}-${alpine_version}
 
-generate_opts=
+generate_opts="--split-dev"
 case "${ALPINE_VERSION}" in
-  3.17) ;;
+  3.20) ;;
   *)
-    generate_opts="${generate_opts} --split-dev"
+    generate_opts="${generate_opts}
+      --cmake-var CMAKE_POLICY_VERSION_MINIMUM=3.10
+      --cmake-var CMAKE_INSTALL_RPATH=/usr/ros/${ros_distro}/lib
+    "
     ;;
 esac
 

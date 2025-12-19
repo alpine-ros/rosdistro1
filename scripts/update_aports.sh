@@ -14,7 +14,7 @@ aports_fork_slug='alpine-ros-bot/aports-ros-experimental'
 title=${ros_distro}-${alpine_version}
 
 generate_opts="--split-dev"
-case "${ALPINE_VERSION}" in
+case "${alpine_version}" in
   3.20) ;;
   *)
     generate_opts="${generate_opts}

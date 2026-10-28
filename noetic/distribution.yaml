@@ -2026,6 +2026,21 @@ repositories:
       url: https://github.com/at-wat/separate_topic.git
       version: master
     status: developed
+  sq_ros1_rclcpp_compat:
+    doc:
+      type: git
+      url: https://github.com/seqsense/sq_ros1_rclcpp_compat.git
+      version: main
+    release:
+      tags:
+        release: release/noetic/{package}/{version}
+      url: https://github.com/seqsense/sq_ros1_rclcpp_compat-release.git
+      version: 0.1.0-1
+    source:
+      type: git
+      url: https://github.com/seqsense/sq_ros1_rclcpp_compat.git
+      version: main
+    status: developed
   std_msgs:
     doc:
       type: git
